@@ -1,7 +1,6 @@
 import React from 'react';
 import Product from './Product';
 
-
 const ProductInList = ({ product,index }) => {
 
   const handleClick = () => {
@@ -9,10 +8,9 @@ const ProductInList = ({ product,index }) => {
   };
 
 
-
   return (
       <tr key={index}>
-             <td> <img src={product.imageUrl} alt="Image" style={{ width: '100px', height: '100px' }} onClick={handleClick}/></td>
+             <td> <img src={`data:image/jpeg;base64,${product.image}`} alt="Image" style={{ width: '100px', height: '100px' }} onClick={handleClick}/></td>
       <td>{product.description}</td>
       <td>{product.salePrice}</td>
     </tr>

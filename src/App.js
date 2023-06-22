@@ -3,6 +3,7 @@ import watch1 from './images/watch1.jpg';
 import ProductInList from './ProductInList';
 import {HttpService } from './HttpService';
 import Product from './Product';
+
 const Table = () => {
 
     const [productList, setProductList] = useState([]);
@@ -26,7 +27,7 @@ const Table = () => {
             const response = await fetch('http://localhost:8080/api/product/1');
             if (response.ok) {
               const jsonData = await response.json();
-               setProductList(jsonData.map(d => new Product(watch1,d.name,d.salePrice,1)));
+               setProductList(jsonData.map(d => new Product(d.image,d.name,d.salePrice,1)));
             } else {
               console.error('Error:', response.statusText);
             }
@@ -42,7 +43,7 @@ const Table = () => {
     <table>
       <thead>
         <tr>
-          <th>Image</th>
+          <th>Imag1e</th>
           <th>Product Name</th>
           <th>Price</th>
         </tr>
