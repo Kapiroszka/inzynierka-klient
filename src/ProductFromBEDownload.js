@@ -3,12 +3,10 @@ import watch1 from './images/watch1.jpg';
 import ProductInList from './ProductInList';
 import {HttpService } from './HttpService';
 import Product from './Product';
-import CategoryTreeNode from './CategoryTreeNode';
-import CategoryTree from './CategoryTree';
 
 const Table = () => {
 
-    const [rootCategory, setRootCategory] = useState([]);
+    const [productList, setProductList] = useState([]);
 
 //  useEffect(() => {
 //        const fetchData = async () => {
@@ -22,22 +20,14 @@ const Table = () => {
 //    fetchData();
 //    }
 //    , []);
-  function mapJsonToTreeNode(json) {
-      const id = json.id;
-      const name = json.name;
-      const parentId = json.parentId;
-      const children = json.children.map(childJson => mapJsonToTreeNode(childJson));
 
-      return new CategoryTreeNode(id, name, parentId, children);
-    }
      useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await fetch('http://localhost:8080/api/category/');
+            const response = await fetch('http://localhost:8080/api/product/1');
             if (response.ok) {
               const jsonData = await response.json();
-               setRootCategory(mapJsonToTreeNode(jsonData));
-               console.log(jsonData)
+               setProductList(jsonData.map(d => new Product(d.image,d.name,d.salePrice,1)));
             } else {
               console.error('Error:', response.statusText);
             }
@@ -50,10 +40,24 @@ const Table = () => {
       }, []);
 
   return (
- <div>
-      <h1>Category Tree Example</h1>
-      <CategoryTree category={rootCategory} />
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Imag1e</th>
+          <th>Product Name</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {productList.map((item, index) => (
+            <ProductInList
+           product = {item}
+            index = {index}
+            redirectTo ="/Example"
+             />
+        ))}
+      </tbody>
+    </table>
   );
 };
 
